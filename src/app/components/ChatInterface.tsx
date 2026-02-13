@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import { generateFitnessReport } from "../utils/generateReport";
 
 interface Message {
     id: string;
@@ -210,8 +211,8 @@ export default function ChatInterface() {
                             >
                                 <div
                                     className={`max-w-[85%] sm:max-w-[75%] ${message.role === "user"
-                                            ? "bg-gradient-to-br from-emerald-600 to-teal-700 text-white rounded-2xl rounded-br-md px-4 py-3 shadow-lg shadow-emerald-900/20"
-                                            : "bg-gray-800/80 text-gray-200 rounded-2xl rounded-bl-md px-4 py-3 border border-gray-700/50 backdrop-blur-sm"
+                                        ? "bg-gradient-to-br from-emerald-600 to-teal-700 text-white rounded-2xl rounded-br-md px-4 py-3 shadow-lg shadow-emerald-900/20"
+                                        : "bg-gray-800/80 text-gray-200 rounded-2xl rounded-bl-md px-4 py-3 border border-gray-700/50 backdrop-blur-sm"
                                         }`}
                                 >
                                     {message.role === "assistant" && (
@@ -271,6 +272,29 @@ export default function ChatInterface() {
                             rows={1}
                             className="flex-1 bg-transparent text-white placeholder-gray-500 resize-none focus:outline-none px-2 py-1.5 text-sm max-h-[150px]"
                         />
+                        {/* Download Report Button */}
+                        {messages.length > 0 && (
+                            <button
+                                onClick={() => generateFitnessReport(messages)}
+                                title="Download Fitness Report"
+                                className="p-2.5 bg-gray-800 hover:bg-gray-700 border border-gray-700/50 hover:border-emerald-500/50 rounded-xl text-gray-400 hover:text-emerald-400 transition-all duration-300 flex-shrink-0"
+                            >
+                                <svg
+                                    className="w-5 h-5"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    strokeWidth={2}
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
+                                    />
+                                </svg>
+                            </button>
+                        )}
+                        {/* Send Button */}
                         <button
                             onClick={() => sendMessage()}
                             disabled={!input.trim() || isLoading}
